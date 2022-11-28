@@ -19,7 +19,7 @@ pip install django
 ## Criar o projeto Django (lembrar do ponto final para criar no diretório atual)
 django-admin startproject eventex .
 
-## Criar um atalho para acessar o manage.python
+## Criar um atalho para acessar o manage.py
 # WINDOWS - Crie o arquivo wttd\.wttd\Scripts\manage.bat com o conteúdo abaixo
 @python "%VIRTUAL_ENV%\..\manage.py" %*
 # UNIX - Crie um alias no seu ~/.bashrc ou ~/.profile
