@@ -6,6 +6,8 @@ mkdir wttd
 
 ## Criar um virtual env para isolar todas as dependências do projeto
 python -m venv .wttd
+# Para criar um ambiente virtual com uma versão específica do python (por exemplo, 3.6)
+python3.6 -m venv .wttd
 
 ## Ativar o venv
 # Windows
