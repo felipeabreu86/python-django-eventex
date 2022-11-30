@@ -30,3 +30,11 @@ manage runserver
 
 ## Criar uma Django App dentro do diretório Eventex
 manage startapp core
+
+## Instalar os seguintes pacotes
+pip install python-decouple
+pip install dj-database-url
+pip install dj-static
+
+## Exportar a lista de dependências do projeto
+pip freeze > requirements.txt
