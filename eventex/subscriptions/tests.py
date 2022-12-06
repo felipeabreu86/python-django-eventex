@@ -85,7 +85,7 @@ class SubscribeInvalidPostTest(TestCase):
         self.response = self.client.post('/inscricao/', {})
 
     def test_post(self):
-        """Invalid POST should nor redirect"""
+        """Invalid POST should not redirect"""
         self.assertEqual(200, self.response.status_code)
 
     def test_template(self):
