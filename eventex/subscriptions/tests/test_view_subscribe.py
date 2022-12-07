@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.core import mail
 from eventex.subscriptions.forms import SubscriptionForm
+from eventex.subscriptions.models import Subscription
 
 
 class SubscribeGet(TestCase):
@@ -38,28 +39,6 @@ class SubscribeGet(TestCase):
         self.assertIsInstance(form, SubscriptionForm)
 
 
-class SubscribePostInvalid(TestCase):
-
-    def setUp(self):
-        self.response = self.client.post('/inscricao/', {})
-
-    def test_post(self):
-        """Invalid POST should not redirect"""
-        self.assertEqual(200, self.response.status_code)
-
-    def test_template(self):
-        self.assertTemplateUsed(
-            self.response, 'subscriptions/subscription_form.html')
-
-    def test_has_form(self):
-        form = self.response.context['form']
-        self.assertIsInstance(form, SubscriptionForm)
-
-    def test_form_has_errors(self):
-        form = self.response.context['form']
-        self.assertTrue(form.errors)
-
-
 class SubscribeSuccessMessage(TestCase):
 
     def setUp(self):
@@ -85,3 +64,31 @@ class SubscribePostValid(TestCase):
     def test_send_subscribe_email(self):
         """E-mail should have been sent"""
         self.assertEqual(1, len(mail.outbox))
+
+    def test_save_subscription(self):
+        self.assertTrue(Subscription.objects.exists())
+
+
+class SubscribePostInvalid(TestCase):
+
+    def setUp(self):
+        self.response = self.client.post('/inscricao/', {})
+
+    def test_post(self):
+        """Invalid POST should not redirect"""
+        self.assertEqual(200, self.response.status_code)
+
+    def test_template(self):
+        self.assertTemplateUsed(
+            self.response, 'subscriptions/subscription_form.html')
+
+    def test_has_form(self):
+        form = self.response.context['form']
+        self.assertIsInstance(form, SubscriptionForm)
+
+    def test_form_has_errors(self):
+        form = self.response.context['form']
+        self.assertTrue(form.errors)
+
+    def test_dont_save_subscription(self):
+        self.assertFalse(Subscription.objects.exists())

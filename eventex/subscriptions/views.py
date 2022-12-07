@@ -5,6 +5,7 @@ from django.shortcuts import render
 from eventex.subscriptions.forms import SubscriptionForm
 from django.template.loader import render_to_string
 from django.contrib import messages
+from eventex.subscriptions.models import Subscription
 
 
 def subscribe(request):
@@ -28,6 +29,8 @@ def create(request):
         settings.DEFAULT_FROM_EMAIL,
         form.cleaned_data['email']
     )
+
+    Subscription.objects.create(**form.cleaned_data)
 
     # Success feedback
     messages.success(request, 'Inscrição realizada com sucesso')
