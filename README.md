@@ -16,7 +16,7 @@ git clone git@github.com:felipeabreu86/python-django-eventex.git
 cd wttd
 python -m venv .wttd
 source .wttd/scripts/activate
-pip install -r requirements.txt
+pip install -r requirements-dev.txt
 cp contrib/env-sample .env
 pytho manage.py test
 ```
