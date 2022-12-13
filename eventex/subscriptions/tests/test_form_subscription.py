@@ -4,6 +4,8 @@ from eventex.subscriptions.forms import SubscriptionForm
 
 class SubscriptionFormTest(TestCase):
 
+    # Tests
+
     def test_form_has_fields(self):
         """Form must have 4 fields"""
         form = SubscriptionForm()
@@ -21,6 +23,13 @@ class SubscriptionFormTest(TestCase):
         form = self._make_validated_form(cpf='1234')
         self.assertFormErrorCode(form, 'cpf', 'cpf_length')
 
+    def test_name_must_be_capitalized(self):
+        """Name must be capitalized"""
+        form = self._make_validated_form(name='HENRIQUE bastos')
+        self.assertEqual('Henrique Bastos', form.cleaned_data['name'])
+
+    # Util
+
     def assertFormErrorCode(self, form, field, code):
         errors = form.errors.as_data()
         errors_list = errors[field]
@@ -32,9 +41,10 @@ class SubscriptionFormTest(TestCase):
         errors_list = errors[field]
         self.assertListEqual([msg], errors_list)
 
-    def _make_validated_form(self, cpf):
-        data = dict(name="Henrique Bastos", cpf=cpf,
-                    email="henrique@bastos.net", phone="21-99618-6180")
+    def _make_validated_form(self, **kwargs):
+        valid = dict(name="Henrique Bastos", cpf="12345678901",
+                     email="henrique@bastos.net", phone="21-99618-6180")
+        data = dict(valid, **kwargs)
         form = SubscriptionForm(data)
         form.is_valid()
         return form

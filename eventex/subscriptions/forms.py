@@ -14,3 +14,12 @@ class SubscriptionForm(forms.Form):
     cpf = forms.CharField(label='CPF', validators=[validate_cpf])
     email = forms.EmailField(label='E-mail')
     phone = forms.CharField(label='Telefone')
+
+    def clean_name(self):
+        """
+        O formulário procura por qualquer função 'clean_' + CAMPO para 
+        procurar por uma complementação do campo
+        """
+        name = self.cleaned_data['name']
+        words = [w.capitalize() for w in name.split()]
+        return ' '.join(words)
